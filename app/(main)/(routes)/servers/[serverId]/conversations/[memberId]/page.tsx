@@ -8,18 +8,17 @@ import ChatMessages from "@/components/chat/chat-messages";
 import ChatInput from "@/components/chat/chat-input";
 import { MediaRoom } from "@/components/ui/media-room";
 
-
 interface MemberIdPageProps {
     params: {
         serverId: string;
         memberId: string;
     },
-    seachParams: {
+    searchParams: {
         video?: boolean
     }
 }
 
-const MemberIdPage = async ({ params, seachParams }: MemberIdPageProps) => {
+const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
     const { serverId, memberId } = params;
     const profile = await currentProfile();
     if (!profile) return auth().redirectToSignIn();
@@ -31,7 +30,7 @@ const MemberIdPage = async ({ params, seachParams }: MemberIdPageProps) => {
         include: {
             profile: true
         }
-    })
+    });
     if (!currentMember) return redirect('/');
     const conversation = await getOrCreateConversation(currentMember.id, memberId);
     if (!conversation) return redirect(`/servers/${serverId}`);
@@ -46,14 +45,14 @@ const MemberIdPage = async ({ params, seachParams }: MemberIdPageProps) => {
                 serverId={serverId}
                 type="conversation"
             />
-            {seachParams?.video && (
+            {searchParams?.video && (
                 <MediaRoom
                     chatId={conversation.id}
                     video={true}
                     audio={true}
                 />
-                )}
-            {!seachParams?.video && (
+            )}
+            {!searchParams?.video && (
                 <>
                     <ChatMessages
                         name={otherMember.profile.name}
@@ -76,7 +75,8 @@ const MemberIdPage = async ({ params, seachParams }: MemberIdPageProps) => {
                         }}
                         type="conversation"
                     />
-                </>)}
+                </>
+            )}
         </div>
     );
 }

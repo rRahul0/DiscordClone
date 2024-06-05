@@ -7,7 +7,7 @@ import { ActionTooltip } from "@/components/ui/action-tooltip";
 
 export const ChatVideoButton = () => {
     const pathname = usePathname();
-    console.log(pathname)
+    // console.log(pathname)
     const router = useRouter();
     const searchParams = useSearchParams();
     
@@ -15,10 +15,10 @@ export const ChatVideoButton = () => {
     const Icon = isVideo ? VideoOff : Video;
     const tooltip = isVideo ? "End Video Call" : "Start Video Call"
     const onClick = () => {
-        const url = qs.stringify({
+        const url = qs.stringifyUrl({
             url: pathname || "",
             query: {
-                video: !isVideo ? undefined : true,
+                video: isVideo ? undefined : true,
             }
         }, { skipNull: true });
         router.push(url);

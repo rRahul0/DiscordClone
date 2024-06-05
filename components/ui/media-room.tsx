@@ -30,7 +30,7 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
             } catch (error) {
                 console.log(error)
             }
-        })();
+        })()
     }, [user?.firstName, user?.lastName, chatId]);
     if (token === "") {
         return (
@@ -44,6 +44,8 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
     }
 
     return (
+        <div className='h-[94%]'>
+
         <LiveKitRoom
             data-lk-theme="default"
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
@@ -52,7 +54,9 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
             video={video}
             connect={true}
         >
-            <VideoConference />
+            <VideoConference/>
         </LiveKitRoom>
+        </div>
+
     );
 }
